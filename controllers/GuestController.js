@@ -1,5 +1,5 @@
 const model = require('../model/GuestModel')
-const view = require('../view')
+const view = require('../view/view')
 
 function getAllGuests(req, res) {
     model.getAllGuests((err, result) => {

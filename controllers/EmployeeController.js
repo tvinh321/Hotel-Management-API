@@ -1,5 +1,5 @@
 const model = require('../model/EmployeeModel')
-const view = require('../view')
+const view = require('../view/view')
 
 function getEmployeeOnFloor(req, res) {
     queryKeys = Object.keys(req.query)

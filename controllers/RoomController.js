@@ -1,5 +1,5 @@
 const model = require('../model/RoomModel')
-const view = require('../view')
+const view = require('../view/view')
 
 function findRoomByGuest(req, res) {
     queryKeys = Object.keys(req.query)
