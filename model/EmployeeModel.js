@@ -14,4 +14,12 @@ function getEmployeeOnFloor(filter, control) {
     })
 }
 
-module.exports = {getEmployeeOnFloor}
+function addGuest(data, control) {
+    let query = `INSERT INTO Employee VALUES(NULL, "${data.name}", "${data.card}", "${data.address}", "${data.phone}", "${data.position}", ${data.floor});`
+
+    db.query(query, (err, result) => {
+        control(err, result)
+    })
+}
+
+module.exports = {getEmployeeOnFloor, addGuest}

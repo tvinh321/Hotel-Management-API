@@ -4,13 +4,14 @@ GET:
 - findRoomByGuest (based on Name or Card or Phone): Done
 - getEmployeeOnFloor (based on FloorNum or/and position): Done
 - findRoomInfo (based on Room Num): Done
---------------------------------------------------------------------
 - getAllRooms (based on FloorNum)
 
 POST:
 - addRoom
 - addGuest
 - addEmployee
+
+---------------------------------------------
 
 PUT:
 - bookRoom (RoomNum and GuestID)

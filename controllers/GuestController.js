@@ -3,7 +3,7 @@ const view = require('../view/view')
 
 function getAllGuests(req, res) {
     model.getAllGuests((err, result) => {
-        view.result(res, err, result)
+        view.getResult(res, err, result)
     })
 }
 
@@ -14,9 +14,21 @@ function findGuest(req, res) {
     }
     else {
         model.findGuest(req.query, (err, result) => {
-            view.result(res, err, result)
+            view.getResult(res, err, result)
         })
     }
 }
 
-module.exports = {getAllGuests, findGuest}
+function addGuest(req, res) {
+    body = req.body
+    if (!body.name || !body.card || !body.phone || !body.address) {
+        view.postWrongFormat(res, ["name", "address", "card", "phone"])
+    }
+    else {
+        model.addGuest(req.body, (err, result) => {
+            view.postResult(res, err, result)
+        })
+    }
+}
+
+module.exports = {getAllGuests, findGuest, addGuest}

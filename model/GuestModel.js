@@ -8,7 +8,7 @@ function getAllGuests(control) {
     })
 }
 
-function findGuest(filter, controller) {
+function findGuest(filter, control) {
     let query = "SELECT * FROM guest WHERE "
 
     if (filter.name) {
@@ -29,4 +29,12 @@ function findGuest(filter, controller) {
     })
 }
 
-module.exports = {getAllGuests, findGuest}
+function addGuest(data, control) {
+    let query = `INSERT INTO Guest VALUES(NULL, "${data.name}", "${data.card}", "${data.address}", "${data.phone}");`
+
+    db.query(query, (err, result) => {
+        control(err, result)
+    })
+}
+
+module.exports = {getAllGuests, findGuest, addGuest}

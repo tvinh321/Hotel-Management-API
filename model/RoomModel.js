@@ -29,4 +29,24 @@ function findRoomInfo(filter, control) {
     })
 }
 
-module.exports = {findRoomByGuest, findRoomInfo}
+function getAllRoom(filter, control) {
+    let query = "SELECT * FROM Room LEFT JOIN Guest ON Room.guest = Guest.ID"
+    if (filter.floor) {
+        query += ` WHERE floorNum = ${filter.floor}`
+    }
+    query += ";"
+
+    db.query(query, (err, result) => {
+        control(err, result)
+    })
+}
+
+function addRoom(data, control) {
+    let query = `INSERT INTO Room VALUES(${data.num}, NULL, ${data.floorNum});`
+
+    db.query(query, (err, result) => {
+        control(err, result)
+    })
+}
+
+module.exports = {findRoomByGuest, findRoomInfo, getAllRoom, addRoom}

@@ -7,13 +7,25 @@ function getEmployeeOnFloor(req, res) {
         view.emptyQuery(res)
     }
     else if (!queryKeys.includes("floor")) {
-        view.paramRequired(res, "floor")
+        view.queryRequired(res, "floor")
     }
     else {
         model.getEmployeeOnFloor(req.query, (err, result) => {
-            view.result(res, err, result)
+            view.getResult(res, err, result)
         })
     }
 }
 
-module.exports = {getEmployeeOnFloor}
+function addEmployee(req, res) {
+    body = req.body
+    if (!body.name || !body.card || !body.phone || !body.address || !body.position || !body.floor) {
+        view.postWrongFormat(res, ["name", "address", "card", "phone", "position", "floor"])
+    }
+    else {
+        model.addEmployee(req.body, (err, result) => {
+            view.postResult(res, err, result)
+        })
+    }
+}
+
+module.exports = {getEmployeeOnFloor, addEmployee}
