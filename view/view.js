@@ -30,8 +30,8 @@ function getResult(res, err, result) {
     }
 }
 
-//POST Wrong JSON Format Response
-function postWrongFormat(res, arrJSON) {
+//POST, PUT Wrong JSON Format Response
+function postputWrongFormat(res, arrJSON) {
     let message = "Wrong Format. Please send a JSON containing"
     for (let i in arrJSON) {
         message += ` '${arrJSON[i]}',`
@@ -68,4 +68,60 @@ function postResult(res, err, result) {
     }
 }
 
-module.exports = {getResult, emptyQuery, queryRequired, postResult, postWrongFormat}
+//PUT Result Response
+function putResult(res, err, result) {
+    if (err) {
+        if (err.code == 'ER_NO_REFERENCED_ROW_2') {
+            res.status(409).send({
+                message: "Foreign Key Constraint"
+            })
+        }
+        else {
+            res.status(500).send({
+                message: "Can't Change The Values"
+            })
+            console.log(err)
+        }
+    }
+    else if (result.affectedRows == 0) {
+        res.status(404).send({
+            message: "404 Not Found"
+        })
+    }
+    else if (result.changedRows == 0) {
+        res.status(202).send({
+            message: "Nothing Changed"
+        })
+    }
+    else {
+        res.status(201).send()
+        console.log(result)
+    }
+}
+
+//Custom Client Error
+function customClientError(res, message) {
+    res.status(400).send({
+        message: message
+    })
+}
+
+//DELETE Result Response
+function deleteResponse(res, err, result) {
+    if (err) {
+        res.status(500).send({
+            message: "Can't Delete The Values"
+        })
+        console.log(err)
+    }
+    else if (result.affectedRows == 0) {
+        res.status(400).send({
+            message: "No such values exist"
+        })
+    }
+    else {
+        res.status(200).send()
+    }
+}
+
+module.exports = {getResult, emptyQuery, queryRequired, postResult, postputWrongFormat, putResult, customClientError, deleteResponse}

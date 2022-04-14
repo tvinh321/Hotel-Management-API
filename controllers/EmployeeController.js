@@ -1,7 +1,7 @@
 const model = require('../model/EmployeeModel')
 const view = require('../view/view')
 
-function getEmployeeOnFloor(req, res) {
+function getByFloor(req, res) {
     queryKeys = Object.keys(req.query)
     if (queryKeys.length == 0) {
         view.emptyQuery(res)
@@ -10,22 +10,62 @@ function getEmployeeOnFloor(req, res) {
         view.queryRequired(res, "floor")
     }
     else {
-        model.getEmployeeOnFloor(req.query, (err, result) => {
+        model.getByFloor(req.query, (err, result) => {
             view.getResult(res, err, result)
         })
     }
 }
 
-function addEmployee(req, res) {
+function add(req, res) {
     body = req.body
     if (!body.name || !body.card || !body.phone || !body.address || !body.position || !body.floor) {
-        view.postWrongFormat(res, ["name", "address", "card", "phone", "position", "floor"])
+        view.postputWrongFormat(res, ["name", "address", "card", "phone", "position", "floor"])
     }
     else {
-        model.addEmployee(req.body, (err, result) => {
+        model.add(req.body, (err, result) => {
             view.postResult(res, err, result)
         })
     }
 }
 
-module.exports = {getEmployeeOnFloor, addEmployee}
+function changePosition(req, res) {
+    body = req.body
+    if (!body.id || !body.position) {
+        view.postputWrongFormat(res, ["id", "position"])
+    }
+    else {
+        model.changePosition(req.body, (message, err, result) => {
+            if (message) {
+                view.customClientError(res, message)
+            }
+            else {
+                view.putResult(res, err, result)
+            }
+        })
+    }
+}
+
+function changeFloor(req, res) {
+    body = req.body
+    if (!body.id || !body.floor) {
+        view.postputWrongFormat(res, ["id", "floor"])
+    }
+    else {
+        model.changeFloor(req.body, (message, err, result) => {
+            if (message) {
+                view.customClientError(res, message)
+            }
+            else {
+                view.putResult(res, err, result)
+            }
+        })
+    }
+}
+
+function remove(req, res) {
+    model.remove(req.params, (err, result) => {
+        view.deleteResponse(res, err, result)
+    })
+}
+
+module.exports = {getByFloor, add, changePosition, changeFloor, remove}

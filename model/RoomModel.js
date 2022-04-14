@@ -1,6 +1,6 @@
 const db = require('./database')
 
-function findRoomByGuest(filter, control) {
+function findByGuest(filter, control) {
     let query = "SELECT num, floorNum FROM Room INNER JOIN Guest ON Room.guest = Guest.ID WHERE "
 
     if (filter.name) {
@@ -21,7 +21,7 @@ function findRoomByGuest(filter, control) {
     })
 }
 
-function findRoomInfo(filter, control) {
+function findInfo(filter, control) {
     let query = `SELECT * FROM Room LEFT JOIN Guest ON Room.guest = Guest.ID WHERE Room.num = ${filter.num};`
 
     db.query(query, (err, result) => {
@@ -29,7 +29,7 @@ function findRoomInfo(filter, control) {
     })
 }
 
-function getAllRoom(filter, control) {
+function getAll(filter, control) {
     let query = "SELECT * FROM Room LEFT JOIN Guest ON Room.guest = Guest.ID"
     if (filter.floor) {
         query += ` WHERE floorNum = ${filter.floor}`
@@ -41,7 +41,7 @@ function getAllRoom(filter, control) {
     })
 }
 
-function addRoom(data, control) {
+function add(data, control) {
     let query = `INSERT INTO Room VALUES(${data.num}, NULL, ${data.floorNum});`
 
     db.query(query, (err, result) => {
@@ -49,4 +49,48 @@ function addRoom(data, control) {
     })
 }
 
-module.exports = {findRoomByGuest, findRoomInfo, getAllRoom, addRoom}
+function book(data, control) {
+    let findRoomQuery = `SELECT guest FROM room WHERE room.num = ${data.num};`
+
+    db.query(findRoomQuery, (err, result) => {
+        if (result[0].guest != null) {
+            control("Room Already Booked", err, result)
+            return
+        }
+        else {
+            let updateQuery = `UPDATE room SET room.guest = ${data.guest} WHERE room.num = ${data.num};`
+
+            db.query(updateQuery, (err, result) => {
+                control(false, err, result)
+            })
+        }
+    })
+}
+
+function checkOut(data, control) {
+    let findRoomQuery = `SELECT guest FROM room WHERE room.num = ${data.num};`
+
+    db.query(findRoomQuery, (err, result) => {
+        if (result[0].guest == null) {
+            control("There Is No Guest There To Check Out", err, result)
+            return
+        }
+        else {
+            let updateQuery = `UPDATE room SET room.guest = NULL WHERE room.num = ${data.num};`
+
+            db.query(updateQuery, (err, result) => {
+                control(null, err, result)
+            })
+        }
+    })
+}
+
+function remove(data, control) {
+    let query = `DELETE FROM room WHERE room.num = ${data.num}`
+
+    db.query(query, (err, result) => {
+        control(err, result)
+    })
+}
+
+module.exports = {findByGuest, findInfo, getAll, add, book, checkOut, remove}

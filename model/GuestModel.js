@@ -1,6 +1,6 @@
 const db = require('./database')
 
-function getAllGuests(control) {
+function getAll(control) {
     let query = "SELECT * FROM guest"
 
     db.query(query, (err, res) => {
@@ -8,7 +8,7 @@ function getAllGuests(control) {
     })
 }
 
-function findGuest(filter, control) {
+function find(filter, control) {
     let query = "SELECT * FROM guest WHERE "
 
     if (filter.name) {
@@ -29,7 +29,7 @@ function findGuest(filter, control) {
     })
 }
 
-function addGuest(data, control) {
+function add(data, control) {
     let query = `INSERT INTO Guest VALUES(NULL, "${data.name}", "${data.card}", "${data.address}", "${data.phone}");`
 
     db.query(query, (err, result) => {
@@ -37,4 +37,4 @@ function addGuest(data, control) {
     })
 }
 
-module.exports = {getAllGuests, findGuest, addGuest}
+module.exports = {getAll, find, add}

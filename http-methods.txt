@@ -1,0 +1,22 @@
+GET:
+- getAllGuests
+- findGuest (based on Name or Card or Phone)
+- findRoomByGuest (based on Name or Card or Phone)
+- getEmployeeOnFloor (based on FloorNum or/and position)
+- findRoomInfo (based on Room Num)
+- getAllRooms (based on FloorNum)
+
+POST:
+- addRoom
+- addGuest
+- addEmployee
+
+PUT:
+- bookRoom (RoomNum and GuestID)
+- checkOutRoom (RoomNum)
+- changePosition (ID and new Position)
+- changeFloorManages (ID and new Floor)
+
+DELETE:
+- deleteEmployee (ID)
+- deleteRoom (RoomNum)
