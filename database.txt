@@ -1,0 +1,82 @@
+create table RoomFloor (
+	num		INT				NOT NULL,
+    PRIMARY KEY(num)
+);
+
+create table Employee (
+	ID				INT				NOT NULL	AUTO_INCREMENT,
+    fullName		VARCHAR(30)		NOT NULL,
+    cardNumber		VARCHAR(12)		NOT NULL,
+    address			VARCHAR(50)		NOT NULL,
+    phoneNumber		VARCHAR(11)		NOT NULL,
+    position		VARCHAR(10)		NOT NULL,
+    floorManages	INT,
+    PRIMARY KEY(ID),
+    FOREIGN KEY(floorManages) REFERENCES RoomFloor(num)
+);
+
+create table Guest (
+	ID				INT				NOT NULL	AUTO_INCREMENT,
+    fullName		VARCHAR(30)		NOT NULL,
+    cardNumber		VARCHAR(12),
+    address			VARCHAR(50),
+    phoneNumber		VARCHAR(11),
+    PRIMARY KEY(ID)
+);
+
+create table Room (
+	num			INT				NOT NULL,
+    guest		INT,
+    floorNum	INT				NOT NULL,
+    PRIMARY KEY(num),
+    FOREIGN KEY(guest) REFERENCES Guest(ID),
+    FOREIGN KEY(floorNum) REFERENCES RoomFloor(num)
+);
+
+INSERT INTO RoomFloor VALUES(1);
+INSERT INTO RoomFloor VALUES(2);
+INSERT INTO RoomFloor VALUES(3);
+INSERT INTO RoomFloor VALUES(4);
+
+INSERT INTO employee VALUES(NULL, "Nguyễn Văn A", "192039212839", "2 Đường A", "01293943242", "Quản Lý", 1);
+INSERT INTO employee VALUES(NULL, "Nguyễn Văn B", "192039212839", "2 Đường B", "01293943242", "Phục Vụ", 1);
+INSERT INTO employee VALUES(NULL, "Nguyễn Văn C", "192039212839", "2 Đường C", "01293943242", "Tạp Vụ", 1);
+INSERT INTO employee VALUES(NULL, "Nguyễn Văn D", "192039212839", "2 Đường D", "01293943242", "Tạp Vụ", 1);
+INSERT INTO employee VALUES(NULL, "Nguyễn Văn E", "192039212839", "2 Đường E", "01293943242", "Quản Lý", 2);
+INSERT INTO employee VALUES(NULL, "Nguyễn Văn F", "192039212839", "2 Đường F", "01293943242", "Phục Vụ", 2);
+INSERT INTO employee VALUES(NULL, "Nguyễn Văn G", "192039212839", "2 Đường G", "01293943242", "Tạp Vụ", 2);
+INSERT INTO employee VALUES(NULL, "Nguyễn Văn H", "192039212839", "2 Đường H", "01293943242", "Tạp Vụ", 2);
+INSERT INTO employee VALUES(NULL, "Nguyễn Văn I", "192039212839", "2 Đường I", "01293943242", "Quản Lý", 3);
+INSERT INTO employee VALUES(NULL, "Nguyễn Văn J", "192039212839", "2 Đường J", "01293943242", "Phục Vụ", 3);
+INSERT INTO employee VALUES(NULL, "Nguyễn Văn K", "192039212839", "2 Đường K", "01293943242", "Tạp Vụ", 3);
+INSERT INTO employee VALUES(NULL, "Nguyễn Văn L", "192039212839", "2 Đường L", "01293943242", "Tạp Vụ", 3);
+INSERT INTO employee VALUES(NULL, "Nguyễn Văn M", "192039212839", "2 Đường M", "01293943242", "Quản Lý", 4);
+INSERT INTO employee VALUES(NULL, "Nguyễn Văn N", "192039212839", "2 Đường N", "01293943242", "Phục Vụ", 4);
+INSERT INTO employee VALUES(NULL, "Nguyễn Văn O", "192039212839", "2 Đường O", "01293943242", "Tạp Vụ", 4);
+INSERT INTO employee VALUES(NULL, "Nguyễn Văn P", "192039212839", "2 Đường P", "01293943242", "Tạp Vụ", 4);
+
+INSERT INTO guest VALUES(NULL, "Lê Thị A", "250125463685", "23/3 Đường B", "0908556321");
+INSERT INTO guest VALUES(NULL, "Lê Thị B", "250125463685", "23/4 Đường B", "0908556321");
+INSERT INTO guest VALUES(NULL, "Lê Thị C", "250125463685", "23/5 Đường B", "0908556321");
+INSERT INTO guest VALUES(NULL, "Lê Thị D", "250125463685", "23/6 Đường B", "0908556321");
+INSERT INTO guest VALUES(NULL, "Lê Thị E", "250125463685", "23/7 Đường B", "0908556321");
+INSERT INTO guest VALUES(NULL, "Lê Thị F", "250125463685", "23/8 Đường B", "0908556321");
+INSERT INTO guest VALUES(NULL, "Lê Thị G", "250125463685", "23/9 Đường B", "0908556321");
+INSERT INTO guest VALUES(NULL, "Lê Thị H", "250125463685", "23/10 Đường B", "0908556321");
+
+INSERT INTO room VALUES(101, NULL, 1);
+INSERT INTO room VALUES(102, 1, 1);
+INSERT INTO room VALUES(103, NULL, 1);
+INSERT INTO room VALUES(104, NULL, 1);
+INSERT INTO room VALUES(105, 7, 1);
+INSERT INTO room VALUES(201, NULL, 2);
+INSERT INTO room VALUES(202, 5, 2);
+INSERT INTO room VALUES(203, NULL, 2);
+INSERT INTO room VALUES(204, NULL, 2);
+INSERT INTO room VALUES(205, 3, 2);
+INSERT INTO room VALUES(301, NULL, 3);
+INSERT INTO room VALUES(302, NULL, 3);
+INSERT INTO room VALUES(303, 2, 3);
+INSERT INTO room VALUES(304, NULL, 3);
+INSERT INTO room VALUES(401, NULL, 4);
+INSERT INTO room VALUES(402, NULL, 4);
