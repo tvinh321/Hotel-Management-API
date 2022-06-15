@@ -33,6 +33,17 @@ create table Room (
     FOREIGN KEY(floorNum) REFERENCES RoomFloor(num)
 );
 
+CREATE TABLE Users (
+	user	VARCHAR(15)	NOT NULL,
+    pass	VARCHAR(64) NOT NULL,
+    PRIMARY KEY(user)
+);
+
+CREATE TABLE RefreshTokens (
+	token	VARCHAR(150)	NOT NULL,
+    PRIMARY KEY(token)
+);
+
 INSERT INTO RoomFloor VALUES(1);
 INSERT INTO RoomFloor VALUES(2);
 INSERT INTO RoomFloor VALUES(3);
